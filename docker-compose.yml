@@ -1,0 +1,25 @@
+version: '3'
+services:
+ mysql:
+  image: mysql
+  ports:
+    - "3306:3306"
+  container_name: docker-mysql2
+  network_mode: host
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: movieDB
+    MYSQL_USER: root-app
+    MYSQL_PASSWORD: root123
+ spring:
+  image: movie-app
+  build: MovieREST/
+  restart: always
+  network_mode: host
+  container_name: docker-spring
+  depends_on:
+    - mysql
+  ports:
+    - 8080:8080
+  expose:
+    - 8080
